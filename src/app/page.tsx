@@ -1,40 +1,18 @@
 'use client'
-import * as React from 'react'
-import { Moon, Sun } from 'lucide-react'
-import { useTheme } from 'next-themes'
-import { Button } from './ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu'
-
-export function ModeToggle() {
-  const { setTheme } = useTheme()
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>System</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
+import { ModeToggle } from './components/ModeToggle'
 
 export default function Home() {
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
-      <div className="w-full md:w-1/3 lg:w-1/4 p-6 md:sticky md:top-0 md:h-screen "></div>
-      <div className="flex-1 overflow-y-auto p-6 space-y-32 ">
+    <div className="flex flex-col md:flex-row h-screen justify-center ">
+      <div className="flex flex-col md:flex-row md:w-7/10 min-h-screen gap-6 border border-white">
+        <div className="flex flex-col w-full min-h-screen md:min-h-0 border justify-center border-blue-500">
+          <div className="flex flex-col w-full h-8/10 border border-orange-500">
+            <section className="w-full border border-green-500"></section>
+          </div>
+        </div>
+        <div className="w-full border border-purple-500"></div>
+      </div>
+      <div className="absolute top-5 right-5 hidden md:block">
         <ModeToggle />
       </div>
     </div>
