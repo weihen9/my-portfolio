@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from './imported_ui_templates/theme-provider'
+import { SidebarProvider, MobileSidebarTrigger } from './imported_ui_templates/sidebar'
+import { AppSidebar } from './components/MobileSideBar'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,7 +34,15 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SidebarProvider>
+            <MobileSidebarTrigger />
+            <div className="md:hidden">
+              <AppSidebar />
+            </div>
+            <div className="relative">
+              <main>{children}</main>
+            </div>
+          </SidebarProvider>
         </ThemeProvider>
       </body>
     </html>
