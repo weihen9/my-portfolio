@@ -13,30 +13,37 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('about')
 
   useEffect(() => {
-    // Scroll detection with Intersection Observer
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+    // Wait for sections to mount (especially dynamically loaded ones)
+    const timer = setTimeout(() => {
+      const sections = navItems
+        .map((item) => document.getElementById(item.id))
+        .filter(Boolean) as Element[]
 
-        if (visible?.target.id) {
-          setActiveSection(visible.target.id)
+      if (sections.length === 0) return
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+          if (visible?.target.id) {
+            setActiveSection(visible.target.id)
+          }
+        },
+        {
+          root: null,
+          threshold: [0.1, 0.25, 0.5, 0.75],
+          rootMargin: '-10% 0px -70% 0px',
         }
-      },
-      {
-        root: null,
-        threshold: [0.25, 0.5, 0.75],
-        rootMargin: '-20% 0px -60% 0px',
-      }
-    )
+      )
 
-    navItems.forEach((item) => {
-      const section = document.getElementById(item.id)
-      if (section) observer.observe(section)
-    })
+      sections.forEach((section) => observer.observe(section))
+    }, 100) // ✅ 100ms delay ensures sections exist
 
-    return () => observer.disconnect()
+    return () => {
+      clearTimeout(timer)
+    }
   }, [])
 
   // Smooth scroll handler
