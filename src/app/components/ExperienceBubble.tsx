@@ -21,12 +21,8 @@ export default function ExperienceSection() {
     const fetchJobs = async () => {
       const { data } = await supabase.from('job_history').select('*')
 
-      // Sort by start_date (latest first)
-      const sorted = (data || []).sort((a, b) => {
-        const dateA = new Date(`1 ${a.start_date}`)
-        const dateB = new Date(`1 ${b.start_date}`)
-        return dateB.getTime() - dateA.getTime()
-      })
+      // ✅ Sort by id (newest first - largest id values)
+      const sorted = (data || []).sort((a, b) => b.id - a.id)
 
       setJobs(sorted)
     }
@@ -45,7 +41,7 @@ export default function ExperienceSection() {
     }
   }, [])
 
-  // Get only the 3 most recent jobs
+  // ✅ Get the 3 most recent jobs (largest id values)
   const recentJobs = jobs.slice(0, 3)
 
   return (
