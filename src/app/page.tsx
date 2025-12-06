@@ -4,7 +4,7 @@ import Navbar from './components/MainNavBar'
 import { ModeToggle } from './components/ModeToggle'
 import ProjectsSection from './components/ProjectBubble'
 import SocialBar from './components/SocialBar'
-
+import Footer from './components/Footer'
 export default function Home() {
   return (
     <div className="flex flex-col md:flex-row md:px-40 gap-6 ">
@@ -59,6 +59,7 @@ export default function Home() {
             <ProjectsSection />
           </section>
         </div>
+        <Footer />
       </div>
       <div className="fixed top-5 right-5 hidden md:block">
         <ModeToggle />

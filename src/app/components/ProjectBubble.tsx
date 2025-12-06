@@ -36,7 +36,6 @@ export default function ProjectsSection() {
     }
   }, [])
 
-  // Always show only 3 most recent projects
   const displayProjects = projects.slice(0, 3)
 
   return (
@@ -45,48 +44,42 @@ export default function ProjectsSection() {
         const isImageLeft = index % 2 === 0
 
         return (
-          <div
-            key={project.id}
-            className="relative h-[350px] w-full group rounded-xl overflow-hidden"
-          >
-            {/* Image container - EXTENDED WIDTH, ROUNDED EDGES, hover z-index change */}
+          <div key={project.id} className="relative h-[350px] w-full rounded-xl overflow-hidden">
+            {/* Image with hover effects only on non-overlapping area */}
             <div
-              className={`peer absolute inset-y-5 ${isImageLeft ? 'left-0 right-[150px]' : 'right-0 left-[150px]'} overflow-hidden z-10 hover:z-20 transition-all duration-300 rounded-xl`}
+              className={`group absolute inset-y-5 ${isImageLeft ? 'left-0 right-[150px]' : 'right-0 left-[150px]'} z-10 rounded-xl overflow-hidden transition-all duration-300 hover:z-40`}
             >
               <a
                 href={project.github_repo_link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full h-full group"
+                className="block w-full h-full relative"
               >
                 <Image
                   src={project.screenshot_url || '/placeholder.jpg'}
                   alt={project.project_name}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
+                  className="object-cover rounded-xl transition-transform duration-300 group-hover:scale-95"
                   priority={index < 3}
                 />
-                {/* Blue filter overlay - fades on hover */}
-                <div className="absolute inset-0 bg-cyan-500/30 transition-opacity duration-300 group-hover:opacity-0 rounded-xl" />
+                {/* Blue overlay - fades slightly faster on hover */}
+                <div className="absolute inset-0 bg-cyan-500/40 rounded-xl transition-opacity duration-700 ease-out group-hover:opacity-0" />
+                {/* Effect trigger covers only visible image area */}
+                <div className={`absolute inset-0 ${isImageLeft ? 'pr-[340px]' : 'pl-[340px]'}`} />
               </a>
             </div>
 
-            {/* Description box - SLIGHTLY SHORTER, rounded edges, responds to peer hover */}
+            {/* Description box - SLIGHTLY EXTENDED WIDTH (340px) */}
             <div
-              className={`absolute top-1/2 -translate-y-1/2 ${isImageLeft ? 'right-0' : 'left-0'} w-[400px] z-20 peer-hover:z-10 transition-all duration-300`}
+              className={`absolute top-1/2 -translate-y-1/2 ${isImageLeft ? 'right-0' : 'left-0'} w-[340px] z-30 transition-all duration-300`}
             >
               <div className="bg-gray-200/95 dark:bg-slate-800/90 backdrop-blur-md border border-gray-400 dark:border-slate-700/50 p-5 shadow-2xl rounded-xl">
-                {/* Project Title */}
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-slate-100 mb-3">
                   {project.project_name}
                 </h3>
-
-                {/* Description */}
                 <p className="text-sm text-gray-900 dark:text-slate-300 leading-relaxed mb-5">
                   {project.description}
                 </p>
-
-                {/* Tech Stack - BUBBLES restored */}
                 <div className="flex flex-wrap gap-2 mb-5">
                   {project.technologies?.map((tech) => (
                     <span
@@ -97,8 +90,6 @@ export default function ProjectsSection() {
                     </span>
                   ))}
                 </div>
-
-                {/* Large Arrow Button */}
                 <a
                   href={project.github_repo_link}
                   target="_blank"
@@ -113,7 +104,7 @@ export default function ProjectsSection() {
           </div>
         )
       })}
-      {/* Resume button - appears below the 3 bubbles */}
+
       <div className="mt-12 pt-8 border-t border-gray-400 dark:border-slate-700/50">
         <a
           href="/resume.pdf"
