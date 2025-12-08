@@ -7,7 +7,7 @@ import SocialBar from './components/SocialBar'
 import Footer from './components/Footer'
 export default function Home() {
   return (
-    <div className="flex flex-col md:flex-row md:px-40 gap-6 ">
+    <div className="flex flex-col md:flex-row md:px-40 gap-6">
       <div className="md:sticky md:top-0 md:w-1/2 h-screen py-40 md:py-28 px-12">
         <div className="flex flex-col h-full gap-6">
           <div className="flex flex-col gap-2">
