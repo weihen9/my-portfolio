@@ -1,10 +1,10 @@
 'use client'
-import ExperienceSection from './components/ExperienceBubble'
-import Navbar from './components/MainNavBar'
-import { ModeToggle } from './components/ModeToggle'
-import ProjectsSection from './components/ProjectBubble'
-import SocialBar from './components/SocialBar'
-import Footer from './components/Footer'
+import ExperienceSection from '@/app/components/ExperienceBubble'
+import Navbar from '@/app/components/MainNavBar'
+import { ModeToggle } from '@/app/components/ModeToggle'
+import ProjectsSection from '@/app/components/ProjectBubble'
+import SocialBar from '@/app/components/SocialBar'
+import Footer from '@/app/components/Footer'
 export default function Home() {
   return (
     <div className="flex flex-col md:flex-row md:px-40 gap-6">
