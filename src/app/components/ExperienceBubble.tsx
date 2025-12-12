@@ -93,7 +93,7 @@ export default function ExperienceSection() {
       {/* Resume button - appears below the 3 bubbles */}
       <div className="mt-12 pt-8 border-t border-gray-400 dark:border-slate-700/50">
         <a
-          href="/resume.pdf"
+          href="/documents/resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm font-medium text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors hover:underline"

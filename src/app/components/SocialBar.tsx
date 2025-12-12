@@ -6,7 +6,7 @@ import Link from 'next/link'
 const socials = [
   { name: 'GitHub', href: 'https://github.com/weihen9', icon: Github },
   { name: 'LinkedIn', href: 'https://www.linkedin.com/in/wei-heng-kee-156841391/', icon: Linkedin },
-  { name: 'Instagram', href: 'https://instagram.com/yourusername', icon: Instagram },
+  { name: 'Instagram', href: 'https://www.instagram.com/weihen9_official/', icon: Instagram },
 ]
 
 export default function SocialBar() {
