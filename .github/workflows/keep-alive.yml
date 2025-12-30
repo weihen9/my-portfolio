@@ -1,26 +1,15 @@
 name: keep-alive
 on:
   schedule:
-    - cron: '0 9 * * 1,4'   # 09:00 UTC Mon & Thu
+    - cron: '0 9 * * 1,4'   # Monday & Thursday 09:00 UTC
   workflow_dispatch:
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - run: npm install @supabase/supabase-js
-      - run: |
-          node - <<'EOF'
-          const { createClient } = require('@supabase/supabase-js');
-          const sb = createClient(process.env.SUPABASE_URL,
-                                  process.env.SUPABASE_SERVICE_ROLE_KEY);
-          // Query a real table with a tiny limit
-          sb.from('projects').select('id').limit(1).then(() => console.log('OK')).catch(e => {
-            console.error(e); process.exit(1);
-          });
-          EOF
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      - name: Keep Supabase alive
+        run: |
+          curl -s "${{ secrets.SUPABASE_URL }}/rest/v1/auth/users?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            > /dev/null && echo "OK"
