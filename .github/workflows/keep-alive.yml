@@ -9,8 +9,10 @@ jobs:
     steps:
       - name: Keep Supabase alive
         run: |
-          curl -s "${{ secrets.SUPABASE_URL }}/rest/v1/rpc/keepalive_ping" \
-            -X POST \
+          curl -s "${{ secrets.SUPABASE_URL }}/rest/v1/heartbeat?id=eq.1" \
+            -X PATCH \
             -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"last_ping":"'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'"}' \
             > /dev/null && echo "OK"
