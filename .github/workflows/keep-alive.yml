@@ -11,14 +11,15 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: npm install @supabase/supabase-js
-      - run: node - <<'EOF'
+      - run: |
+          node - <<'EOF'
           const { createClient } = require('@supabase/supabase-js');
           const sb = createClient(process.env.SUPABASE_URL,
                                   process.env.SUPABASE_SERVICE_ROLE_KEY);
           sb.rpc('select 1').then(() => console.log('OK')).catch(e => {
             console.error(e); process.exit(1);
           });
-        EOF
+          EOF
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
